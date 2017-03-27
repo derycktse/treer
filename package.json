@@ -1,0 +1,11 @@
+{
+  "name": "treer",
+  "version": "1.0.0",
+  "description": "a directory structure tree generator",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "author": "Deryck Tse",
+  "license": "ISC"
+}
