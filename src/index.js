@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const program = require('commander')
 const package = require('../package.json')
 const fs = require('fs')
@@ -31,27 +32,50 @@ const dirToJson = (path) => {
 	return structure
 }
 
-const characters = ['|', '|--']
+// const characters = ['|', '|--', '├', '──','└─']
+
 
 const result = dirToJson(program.directory)
-	// console.log(JSON.stringify(result))
+console.log(JSON.stringify(result))
 	// console.log(result)
+const characters = {
+	border: '|',
+	contain: '├',
+	line: '─',
+	last: '└'
+}
 
 
 const drawDirTree = (data, placeholder) => {
+
+	let {
+		border,
+		contain,
+		line,
+		last
+	} = characters
+
 	for (let i in data) {
 		if (typeof data[i] === 'string') {
 			console.log(placeholder + data[i])
 		} else if (Array.isArray(data[i])) {
-			let pl = placeholder !=="|" ? 	placeholder.replace(/\s+\|$/,"")+ "--" : ""
+			let pl = placeholder !== "|" ? placeholder.replace(/\s+\|$/, "") + characters["line"] : ""
 			console.log(pl + i)
-			data[i].forEach((val) => {
+			data[i].forEach((val, idx, arr) => {
+
+				//if the idx is the last one, change the character
+				if (idx === (arr.length - 1)) {
+					let regex = new RegExp(`${contain}$`, "g")
+					placeholder = placeholder.replace(regex, last)
+				}
+
 				if (typeof val === 'string') {
-					console.log(placeholder + "--" + val)
+					console.log(placeholder + characters["line"] + val)
 				} else {
 					// console.log(i)
 
-					drawDirTree(val, placeholder.replace(/--/g, "  ") + Array(i.length).join(" ") + "|")
+					let regx = new RegExp(`(${contain})|(${line})|${last}`, "g")
+					drawDirTree(val, placeholder.replace(regx, " ") + Array(i.length).join(" ") + characters["contain"])
 
 				}
 			})
@@ -59,8 +83,9 @@ const drawDirTree = (data, placeholder) => {
 	}
 }
 
-drawDirTree(result, "|")
 
+drawDirTree(result, characters['border'])
+console.log(characters["last"] + characters["line"])
 
 
 function sortDir(arr) {
