@@ -21,9 +21,8 @@ const dirToJson = (path) => {
 			let childStats = fs.lstatSync(path + '/' + child)
 			return childStats.isDirectory() ? dirToJson(path + '/' + child) : child
 		})
-		let dirObj = {},
-			dirName = path.replace(/.*\//g, '')
-		structure[dirName] = dir
+		let dirName = path.replace(/.*\//g, '')
+		structure[dirName] = sortDir(dir)
 	} else {
 		let fileName = path.replace(/.*\//g, '')
 		return fileName
@@ -43,11 +42,14 @@ const drawDirTree = (data, placeholder) => {
 		if (typeof data[i] === 'string') {
 			console.log(placeholder + data[i])
 		} else if (Array.isArray(data[i])) {
+			let pl = placeholder !=="|" ? 	placeholder.replace(/\s+\|$/,"")+ "--" : ""
+			console.log(pl + i)
 			data[i].forEach((val) => {
 				if (typeof val === 'string') {
-					console.log(placeholder+"--" + val)
+					console.log(placeholder + "--" + val)
 				} else {
-					drawDirTree(val, placeholder.replace("--", "  ") + Array(i.length).join(" ") + "|--")
+					// console.log(i)
+					drawDirTree(val, placeholder.replace(/--/g, "  ") + Array(i.length).join(" ") + "|")
 
 				}
 			})
@@ -56,3 +58,18 @@ const drawDirTree = (data, placeholder) => {
 }
 
 drawDirTree(result, "|")
+
+
+
+function sortDir(arr) {
+	let i = arr.length - 1
+	while (i >= 0) {
+		if (typeof arr[i] === 'object') {
+			let obj = arr.splice(i, 1)
+			arr.push(obj[0])
+
+		}
+		i--
+	}
+	return arr
+}
