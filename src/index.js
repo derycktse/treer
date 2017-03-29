@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const program = require('commander')
 const package = require('../package.json')
 const fs = require('fs')
@@ -49,6 +50,7 @@ const drawDirTree = (data, placeholder) => {
 					console.log(placeholder + "--" + val)
 				} else {
 					// console.log(i)
+
 					drawDirTree(val, placeholder.replace(/--/g, "  ") + Array(i.length).join(" ") + "|")
 
 				}
