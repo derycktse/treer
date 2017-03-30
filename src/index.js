@@ -23,7 +23,7 @@ const dirToJson = (path) => {
 			let childStats = fs.lstatSync(path + '/' + child)
 			return childStats.isDirectory() ? dirToJson(path + '/' + child) : child
 		})
-		let dirName = path.replace(/.*\//g, '')
+		let dirName = path.replace(/.*\/(?!$)/g, '')
 		structure[dirName] = sortDir(dir)
 	} else {
 		let fileName = path.replace(/.*\//g, '')
@@ -46,7 +46,7 @@ const characters = {
 }
 
 
-const drawDirTree = (data, placeholder) => {
+const drawDirTree = (data, placeholder) =>{
 
 	let {
 		border,
@@ -54,28 +54,47 @@ const drawDirTree = (data, placeholder) => {
 		line,
 		last
 	} = characters
-
+//     placeholder = placeholder.replace(new RegExp(`\\${contain}${line}`,"g"), border+ " ")
+//     placeholder = placeholder.replace(new RegExp(`${line}`,"g"), "  ")
 	for (let i in data) {
+
 		if (typeof data[i] === 'string') {
 			console.log(placeholder + data[i])
 		} else if (Array.isArray(data[i])) {
-			let pl = placeholder !== "|" ? placeholder.replace(/\s+\|$/, "") + characters["line"] : ""
-			console.log(pl + i)
-			data[i].forEach((val, idx, arr) => {
+// 			let pl = placeholder !== contain ? placeholder.replace(/\s+\|$/, "") + characters["line"] : ""
+//             let pl = placeholder !== contain ? placeholder : ""
+            
+// 			console.log(placeholder.replace(new RegExp(` +${contain}${line}$`,""), "") + i)
+            console.log(placeholder +i)
+			placeholder = placeholder.replace(new RegExp(`${contain}`,"g"), border)
+			placeholder = placeholder.replace(new RegExp(`${line}`,"g"), " ")
 
-				//if the idx is the last one, change the character
-				if (idx === (arr.length - 1)) {
-					let regex = new RegExp(`${contain}$`, "g")
-					placeholder = placeholder.replace(regex, last)
-				}
+			placeholder = placeholder+ Array(Math.ceil(i.length/2)).join(" ")+ contain+line 
+
+// 			console.log(placeholder + i)
+			placeholder = placeholder.replace( new RegExp("^ +",'g'),"") 
+			data[i].forEach((val, idx, arr) => {
+                let pl = placeholder
+                //if the idx is the last one, change the character
+                if(idx === (arr.length-1) ){
+                    let regex = new RegExp(`${contain}${line}$`,"g")
+                     
+                  pl =   placeholder.replace(regex, last)
+                }
 
 				if (typeof val === 'string') {
-					console.log(placeholder + characters["line"] + val)
+// 				    placeholder =  Array(i.length).join(" ") + placeholder + characters["line"]
+//                     placeholder = placeholder.replace(new RegExp(``,"g"), "")
+					console.log(pl + val)
 				} else {
 					// console.log(i)
-
-					let regx = new RegExp(`(${contain})|(${line})|${last}`, "g")
-					drawDirTree(val, placeholder.replace(regx, " ") + Array(i.length).join(" ") + characters["contain"])
+//                     for(let j in val){
+//                         console.log(placeholder + j)
+//                     }
+// 					let regx = new RegExp(`(${contain})|(${line})|${last}|\\${border}`, "g")
+//                     let regx = new RegExp(``)
+					let pl = placeholder
+					drawDirTree(val, pl)
 
 				}
 			})
@@ -84,8 +103,8 @@ const drawDirTree = (data, placeholder) => {
 }
 
 
-drawDirTree(result, characters['border'])
-console.log(characters["last"] + characters["line"])
+drawDirTree(result, "")
+// console.log(characters["last"] + characters["line"])
 
 
 function sortDir(arr) {
