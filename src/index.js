@@ -8,6 +8,7 @@ program
 	.version(package.version)
 	.option('-d, --directory [dir]', 'Please specify a directory to generate structure tree', process.cwd())
 	.option('-i, --ignore [ig]', 'You can ignore specific directory name')
+	.option('-e, --export [epath]', 'export into file')
 	.parse(process.argv);
 
 let ignoreRegex = null
@@ -65,6 +66,8 @@ const characters = {
 }
 
 
+let outputString = ''
+
 const drawDirTree = (data, placeholder) => {
 
 	let {
@@ -76,9 +79,12 @@ const drawDirTree = (data, placeholder) => {
 	for (let i in data) {
 
 		if (typeof data[i] === 'string') {
-			console.log(placeholder + data[i])
+
+			// console.log(placeholder + data[i])
+			outputString += '\n' + placeholder + data[i]
 		} else if (Array.isArray(data[i])) {
-			console.log(placeholder + i)
+			// console.log(placeholder + i)
+			outputString += '\n' + placeholder + i
 			placeholder = placeholder.replace(new RegExp(`${contain}`, "g"), border)
 			placeholder = placeholder.replace(new RegExp(`${line}`, "g"), " ")
 
@@ -95,7 +101,8 @@ const drawDirTree = (data, placeholder) => {
 				}
 
 				if (typeof val === 'string') {
-					console.log(pl + val)
+					// console.log(pl + val)
+					outputString += '\n' + pl + val
 				} else {
 					let pl = placeholder
 					drawDirTree(val, pl)
@@ -108,6 +115,19 @@ const drawDirTree = (data, placeholder) => {
 
 
 drawDirTree(result, "")
+
+
+outputString = outputString.replace(/^\n/,'')
+
+console.log(outputString)
+
+//if export path is specified
+if (program.export) {
+	fs.writeFile(program.export, outputString, (err) => {
+		if (err) throw err;
+		console.log('\n\n'+ 'The result has been saved into ' + program.export);
+	});
+}
 
 
 function sortDir(arr) {
