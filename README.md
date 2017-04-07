@@ -1,7 +1,7 @@
-##treer##
+## treer ##
 Treer is a commandline tool to generate directory structure tree
 
-##usage##
+## usage ##
 
 ```
 $ treer --help
