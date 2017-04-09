@@ -1,14 +1,17 @@
 {
-	"name": "treer",
-	"version": "1.0.0",
-	"description": "a directory structure tree generator",
-	"bin": {
-		"treer": "src/index.js"
-	},
-	"main": "index.js",
-	"scripts": {
-		"test": ""
-	},
-	"author": "Deryck Tse",
-	"license": "ISC"
+  "name": "treer",
+  "version": "1.0.0",
+  "description": "a directory structure tree generator",
+  "bin": {
+    "treer": "src/index.js"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "author": "Deryck Tse",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
 }
