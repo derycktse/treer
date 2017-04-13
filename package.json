@@ -11,6 +11,13 @@
   },
   "author": "Deryck Tse",
   "license": "ISC",
+  "keywords": [
+    "directory",
+    "dir",
+    "folder",
+    "structure",
+    "tree"
+  ],
   "dependencies": {
     "commander": "^2.9.0"
   }
