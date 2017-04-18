@@ -17,8 +17,18 @@ $ treer --help
     -e, --export [epath]   export into file
 ```
 
+## Available Options: ##
+`-d` Specify a directory path to generate it's structure tree
 
-example:
+`-i` or `--ignore` the directory name pattern to skip, it also support regex:
+
+```
+$ treer -i "/^regex$/"
+```
+
+`-e` or `--export` export into file
+
+### example: ###
 ```
 $ treer -e ./result.txt -i .git
 

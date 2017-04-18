@@ -19,8 +19,8 @@ if (program.ignore) {
 	//trim program.ignore
 	program.ignore = program.ignore.replace(/^\s*|\s*$/g, '')
 
-	if (/\/.+\/$/.test(program.ignore)) {
-		program.ignore = program.ignore.replace(/^\/|\/$/g, '')
+	if (/^\/.+\/$/.test(program.ignore)) {
+		program.ignore = program.ignore.replace(/(^\/)|(\/$)/g, '')
 		ignoreRegex = new RegExp(program.ignore, "")
 	} else {
 		//escape special character
