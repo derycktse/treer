@@ -1,6 +1,12 @@
 ## treer ##
 Treer is a commandline tool to generate directory structure tree
 
+## install ##
+
+```
+$ npm install treer -g
+```
+
 ## usage ##
 
 ```
