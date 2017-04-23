@@ -1,16 +1,13 @@
 {
   "name": "treer",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "a directory structure tree generator",
   "bin": {
     "treer": "src/index.js"
   },
   "main": "index.js",
-  "scripts": {
-    "test": ""
-  },
   "author": "Deryck Tse",
-  "license": "ISC",
+  "license": "MIT",
   "keywords": [
     "directory",
     "dir",
@@ -20,5 +17,12 @@
   ],
   "dependencies": {
     "commander": "^2.9.0"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "git@github.com:derycktse/treer.git"
+  },
+  "bugs": {
+    "url" : "https://github.com/derycktse/treer/issues"
   }
 }
