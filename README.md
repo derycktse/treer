@@ -1,6 +1,8 @@
 ## treer ##
 Treer is a commandline tool to generate directory structure tree
 
+<a href="https://badge.fury.io/js/treer"><img src="https://badge.fury.io/js/treer.svg" alt="npm version" height="18"></a>
+
 ## install ##
 
 ```
