@@ -24,7 +24,7 @@ if (program.ignore) {
 		ignoreRegex = new RegExp(program.ignore, "")
 	} else {
 		//escape special character
-		program.ignore = program.ignore.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+		program.ignore = program.ignore.replace(/[-[\]{}*+?,\\^$|#\s]/g, "\\$&");
 		ignoreRegex = new RegExp("^" + program.ignore + "$", "")
 	}
 
