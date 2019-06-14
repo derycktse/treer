@@ -9,6 +9,7 @@ program
 	.option('-d, --directory [dir]', 'Please specify a directory to generate structure tree', process.cwd())
 	.option('-i, --ignore [ig]', 'You can ignore specific directory name')
 	.option('-e, --export [epath]', 'export into file')
+        .option('-f, --only-folder', 'output folder only')
 	.parse(process.argv);
 
 let ignoreRegex = null
@@ -44,9 +45,11 @@ const dirToJson = (path) => {
 				return !ignoreRegex.test(val)
 			})
 		}
-		dir = dir.map((child) => {
+		dir = dir.filter((child) => {
 			let childStats = fs.lstatSync(path + '/' + child)
-			return childStats.isDirectory() ? dirToJson(path + '/' + child) : child
+			return program.onlyFolder ? childStats.isDirectory() : true
+		}).map((child) => {
+			return dirToJson(path + '/' + child)
 		})
 		let dirName = path.replace(/.*\/(?!$)/g, '')
 		structure[dirName] = sortDir(dir)
